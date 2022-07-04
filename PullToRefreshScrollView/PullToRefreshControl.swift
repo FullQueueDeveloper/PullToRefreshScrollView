@@ -12,7 +12,7 @@ struct PullToRefreshControl: View {
   @Binding var offset: CGFloat
   
   let atRestDistance: CGFloat = 1
-  let cliff: CGFloat = 100.0
+  let cliff: CGFloat = 120.0
 
   let action: () async -> Void
 

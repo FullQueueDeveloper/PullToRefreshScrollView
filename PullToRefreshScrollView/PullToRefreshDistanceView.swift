@@ -23,7 +23,6 @@ struct PullToRefreshDistanceView: View {
           guard let frame = frames.first else {
             return
           }
-          print("offset", offset)
           let offset = frame.minY
           self.offset = offset
         }

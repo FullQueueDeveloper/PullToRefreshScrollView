@@ -18,10 +18,10 @@ struct PullToRefreshScrollView<Content: View>: View {
 
     ZStack {
       PullToRefreshControl(offset: $offset, action: action)
-      ScrollView {
 
+      ScrollView {
         content()
-          .background(        PullToRefreshDistanceView(
+          .background(PullToRefreshDistanceView(
             offset: $offset,
             coordinateSpaceName: coordinateSpaceName))
       }
