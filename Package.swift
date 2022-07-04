@@ -6,6 +6,7 @@ let package = Package(
     name: "PullToRefreshScrollView",
     platforms: [
         .iOS(.v14),
+        .macOS(.v11),
     ],
     products: [
         .library(
