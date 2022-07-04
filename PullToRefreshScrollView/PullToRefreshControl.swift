@@ -34,12 +34,12 @@ struct PullToRefreshControl: View {
                                     color: color,
                                     foregroundColor: foregroundColor,
                                     value: value)
-            
+
         case .waitingOnRefresh,
             .triggered,
             .interactionOngoingRefreshComplete:
           ProgressView()
-            
+
             .progressViewStyle(.circular)
             .padding()
         }
@@ -48,9 +48,6 @@ struct PullToRefreshControl: View {
       Spacer()
     }
     .onChange(of: offset, perform: { _ in update() })
-    .onChange(of: refreshControlState, perform: { newValue in
-      print(newValue)
-    })
   }
 
   func update() {
