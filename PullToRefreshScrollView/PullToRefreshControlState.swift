@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum PullToRefreshControlState: Equatable {
+public enum PullToRefreshControlState: Equatable {
   case atRest // default state
 
   case possible(CGFloat) // interaction has started

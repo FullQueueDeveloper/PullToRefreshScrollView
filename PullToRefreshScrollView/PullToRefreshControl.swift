@@ -14,7 +14,7 @@ struct PullToRefreshControl<RefreshContent: View>: View {
   @Binding var refreshControlState: PullToRefreshControlState
 
   let action: () async -> Void
-  let refreshContent: (CGFloat) -> RefreshContent
+  let refreshContent: (PullToRefreshControlState) -> RefreshContent
 
   private let atRestDistance: CGFloat = 1
 
@@ -26,18 +26,7 @@ struct PullToRefreshControl<RefreshContent: View>: View {
     VStack {
       HStack {
         Spacer()
-        switch refreshControlState {
-        case .atRest:
-          EmptyView()
-        case .possible(let value):
-          refreshContent(value)
-        case .waitingOnRefresh,
-            .triggered,
-            .interactionOngoingRefreshComplete:
-          ProgressView()
-            .progressViewStyle(.circular)
-            .padding()
-        }
+        refreshContent(refreshControlState)
         Spacer()
       }
       Spacer()
