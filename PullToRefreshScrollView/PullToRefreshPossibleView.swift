@@ -14,11 +14,15 @@ struct PullToRefreshPossibleView: View {
   let value: CGFloat // 0.0 to 1.0
 
   var body: some View {
-    Ellipse()
-      .frame(width: min(value * cliff, 0.2 * cliff),
-             height: value * cliff)
-      .foregroundColor(foregroundColor)
-      .padding()
+    ZStack {
+      Image(systemName: "arrow.clockwise")
+
+      Ellipse()
+        .frame(width: min(value * cliff, 0.2 * cliff),
+               height: value * cliff)
+        .foregroundColor(foregroundColor)
+        .padding()
+    }
   }
 
   var foregroundColor: Color {

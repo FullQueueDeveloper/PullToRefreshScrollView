@@ -12,69 +12,81 @@ struct ContentView: View {
   @State var items: [UUID] = [UUID()]
 
   var body: some View {
-    PullToRefreshScrollView {
-      print("sleeping")
-      try! await Task.sleep(nanoseconds: 1)// 5000000000)
-      await MainActor.run {
-        items = [
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-          UUID(),
-        ]
-      }
-      print("done sleeping")
-    } content: {
-      VStack(alignment: .leading, spacing: 16) {
-        ForEach(items, id: \.hashValue) { item in
-          Text("\(item.uuidString)")
-            .frame(maxWidth: .infinity)
+    VStack(spacing: 0) {
+//      HStack {
+//        Text("hello")
+//        Spacer()
+//        Text("goodbye")
+//
+//
+//      }
+//      .padding()
+//      .background(Color.gray)
+
+      PullToRefreshScrollView(color: .red) {
+        print("sleeping")
+        try! await Task.sleep(nanoseconds: 5000000000)
+        await MainActor.run {
+          items = [
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+            UUID(),
+          ]
+        }
+        print("done sleeping")
+      } content: {
+        VStack(alignment: .leading, spacing: 16) {
+          ForEach(items, id: \.hashValue) { item in
+            Text("\(item.uuidString)")
+              .frame(maxWidth: .infinity)
+          }
         }
       }
     }

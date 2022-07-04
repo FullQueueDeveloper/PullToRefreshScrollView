@@ -14,6 +14,9 @@ struct PullToRefreshScrollView<Content: View>: View {
   let action: () async -> Void
   let content: () -> Content
 
+  @State
+  var refreshControlState: PullToRefreshControlState = .atRest
+
   init(cliff: CGFloat = 120,
        color: Color = .accentColor,
        action: @escaping () async -> Void,
@@ -25,21 +28,45 @@ struct PullToRefreshScrollView<Content: View>: View {
   }
 
   @State var offset: CGFloat = 0
+  @State var contentPadding: CGFloat = 0
 
   var body: some View {
 
     ZStack {
-      PullToRefreshControl(cliff: cliff, color: color, offset: $offset, action: action)
-
+      PullToRefreshControl(cliff: cliff, color: color, offset: $offset, refreshControlState: $refreshControlState, action: action)
+//        .padding(.top, -10)
       ScrollView {
-        content()
-          .background(PullToRefreshDistanceView(
-            offset: $offset,
-            coordinateSpaceName: coordinateSpaceName))
+        VStack(spacing: 0) {
+
+            Spacer()
+              .frame(height: contentPadding)
+
+
+          content()
+
+        }
+        .background(PullToRefreshDistanceView(
+          offset: $offset,
+          coordinateSpaceName: coordinateSpaceName))
       }
       .coordinateSpace(name: coordinateSpaceName)
     }
+    .onChange(of: refreshControlState) { newValue in
+      withAnimation(.easeInOut) {
+        self.contentPadding = contentPadding(refreshControlState: newValue)
+      }
+    }
+  }
 
+  func contentPadding(refreshControlState: PullToRefreshControlState) -> CGFloat {
+    switch refreshControlState {
+    case .atRest: return 0
+    case .possible: return 0
+    case .triggered, .waitingOnRefresh:
+      return cliff * 0.25
+    case .interactionOngoingRefreshComplete:
+      return 0
+    }
   }
 
   @State var uuid: UUID = UUID()
