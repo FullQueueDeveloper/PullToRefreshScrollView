@@ -31,17 +31,10 @@ struct PullToRefreshControl<RefreshContent: View>: View {
           EmptyView()
         case .possible(let value):
           refreshContent(value)
-//          PullToRefreshContentView(threshold: threshold,
-//                                    color: color,
-//                                    foregroundColor: foregroundColor,
-//                                    value: value)
-//          .frame(width: 0.3 * threshold, height: 0.3 * threshold)
-
         case .waitingOnRefresh,
             .triggered,
             .interactionOngoingRefreshComplete:
           ProgressView()
-
             .progressViewStyle(.circular)
             .padding()
         }

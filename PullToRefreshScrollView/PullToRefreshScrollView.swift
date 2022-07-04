@@ -44,20 +44,24 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
                            refreshControlState: $refreshControlState,
                            action: action,
                            refreshContent: refreshContent)
+      GeometryReader { geo in
+        ScrollView {
+          VStack(spacing: 0) {
 
-      ScrollView {
-        VStack(spacing: 0) {
+            Spacer()
+              .frame(height: contentPadding)
 
-          Spacer()
-            .frame(height: contentPadding)
-
-          content()
+            content()
+              .anchorPreference(key: PullToRefreshDistancePreferenceKey.self, value: .top) {
+                geo[$0].y
+              }
+          }
         }
-        .background(PullToRefreshDistanceView(
-          offset: $offset,
-          coordinateSpaceName: coordinateSpaceName))
       }
       .coordinateSpace(name: coordinateSpaceName)
+    }
+    .onPreferenceChange(PullToRefreshDistancePreferenceKey.self) { offset in
+      self.offset = offset
     }
     .onChange(of: refreshControlState) { newValue in
       withAnimation(.easeInOut) {

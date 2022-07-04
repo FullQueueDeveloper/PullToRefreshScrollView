@@ -8,12 +8,9 @@
 import SwiftUI
 
 struct PullToRefreshDistancePreferenceKey: PreferenceKey {
-  static var defaultValue: [CGRect] = []
+  static var defaultValue: CGFloat = 0
 
-  static func reduce(value: inout [CGRect], nextValue: () -> [CGRect]) {
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
     value = nextValue()
   }
-
-  typealias Value = [CGRect]
-
 }
