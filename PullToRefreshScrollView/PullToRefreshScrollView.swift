@@ -9,15 +9,27 @@ import SwiftUI
 
 struct PullToRefreshScrollView<Content: View>: View {
 
+  let cliff: CGFloat
+  let color: Color
   let action: () async -> Void
   let content: () -> Content
+
+  init(cliff: CGFloat = 120,
+       color: Color = .accentColor,
+       action: @escaping () async -> Void,
+       content: @escaping () -> Content) {
+    self.cliff = cliff
+    self.color = color
+    self.action = action
+    self.content = content
+  }
 
   @State var offset: CGFloat = 0
 
   var body: some View {
 
     ZStack {
-      PullToRefreshControl(offset: $offset, action: action)
+      PullToRefreshControl(cliff: cliff, color: color, offset: $offset, action: action)
 
       ScrollView {
         content()

@@ -9,19 +9,19 @@ import SwiftUI
 
 struct PullToRefreshControl: View {
 
+  let cliff: CGFloat
+  let color: Color
   @Binding var offset: CGFloat
-  
-  let atRestDistance: CGFloat = 1
-  let cliff: CGFloat = 120.0
-
   let action: () async -> Void
+
+  private let atRestDistance: CGFloat = 1
 
   @State var refreshControlState: RefreshControlState = .atRest
 
   enum RefreshControlState: Equatable {
     case atRest // default state
 
-    case possible(Float) // interaction has started
+    case possible(CGFloat) // interaction has started
 
     case triggered // scrolled down far enough to trigger the refresh
 
@@ -42,7 +42,7 @@ struct PullToRefreshControl: View {
         case .atRest:
           EmptyView()
         case .possible(let value):
-          PullToRefreshPossibleView(value: value)
+          PullToRefreshPossibleView(cliff: cliff, color: color, value: value)
             
         case .waitingOnRefresh,
             .triggered,
@@ -65,10 +65,10 @@ struct PullToRefreshControl: View {
     if isInteractionActive {
       switch refreshControlState {
       case .atRest:
-        self.refreshControlState = .possible(Float(min(cliff, offset)/cliff))
+        self.refreshControlState = .possible(min(cliff, offset)/cliff)
       case .possible:
         if offset < cliff {
-          self.refreshControlState = .possible(Float(min(cliff, offset)/cliff))
+          self.refreshControlState = .possible(min(cliff, offset)/cliff)
         } else {
           triggerRefresh()
           self.refreshControlState = .triggered
