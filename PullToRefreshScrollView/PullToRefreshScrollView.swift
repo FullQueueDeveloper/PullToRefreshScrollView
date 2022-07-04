@@ -10,8 +10,6 @@ import SwiftUI
 public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View {
   private let atRestDistance: CGFloat = 1
   let threshold: CGFloat
-  let color: Color
-  let foregroundColor: Color
   let action: () async -> Void
   let refreshContent: (PullToRefreshControlState) -> RefreshContent
   let content: () -> Content
@@ -20,14 +18,10 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
   var refreshControlState: PullToRefreshControlState = .atRest
 
   public init(threshold: CGFloat = 120,
-              color: Color = .accentColor,
-              foregroundColor: Color = .white,
               action: @escaping () async -> Void,
               @ViewBuilder refreshContent: @escaping (PullToRefreshControlState) -> RefreshContent,
               @ViewBuilder content: @escaping () -> Content) {
     self.threshold = threshold
-    self.color = color
-    self.foregroundColor = foregroundColor
     self.action = action
     self.refreshContent = refreshContent
     self.content = content
@@ -41,19 +35,14 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
     ZStack(alignment: .top) {
 
       refreshContent(refreshControlState)
-      
+
       GeometryReader { geo in
         ScrollView {
-          VStack(spacing: 0) {
-
-            Spacer()
-              .frame(height: contentPadding)
-
-            content()
-              .anchorPreference(key: PullToRefreshDistancePreferenceKey.self, value: .top) {
-                geo[$0].y
-              }
-          }
+          content()
+            .padding(.top, contentPadding)
+            .anchorPreference(key: PullToRefreshDistancePreferenceKey.self, value: .top) {
+              geo[$0].y
+            }
         }
       }
     }

@@ -21,15 +21,15 @@ struct ContentView: View {
       .padding()
       .background(Color.gray)
 
-      PullToRefreshScrollView(color: .accentColor) {
+      PullToRefreshScrollView {
         await refresh()
       } refreshContent: { state in
         switch state {
         case .atRest:
           EmptyView()
         case .possible(let value):
-          PullToRefreshContentView(color: .red,
-                                   foregroundColor: .black,
+          PullToRefreshContentView(color: .purple,
+                                   foregroundColor: .orange,
                                    value: value)
           .frame(width: 40, height: 40)
           .padding()
