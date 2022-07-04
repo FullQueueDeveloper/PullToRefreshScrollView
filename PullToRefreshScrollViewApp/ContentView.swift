@@ -24,8 +24,7 @@ struct ContentView: View {
       .background(Color.gray)
 
       PullToRefreshScrollView(color: .accentColor) {
-        print("sleeping")
-        try! await Task.sleep(nanoseconds: 5000000000)
+        try! await Task.sleep(nanoseconds: 1000000000)//3000000000)
         await MainActor.run {
           items = [
             UUID(),
@@ -80,7 +79,6 @@ struct ContentView: View {
             UUID(),
           ]
         }
-        print("done sleeping")
       } content: {
         VStack(alignment: .leading, spacing: 16) {
           ForEach(items, id: \.hashValue) { item in

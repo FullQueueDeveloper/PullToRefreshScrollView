@@ -11,6 +11,7 @@ struct PullToRefreshControl: View {
 
   let cliff: CGFloat
   let color: Color
+  let foregroundColor: Color
   @Binding var offset: CGFloat
   @Binding var refreshControlState: PullToRefreshControlState
   let action: () async -> Void
@@ -29,7 +30,10 @@ struct PullToRefreshControl: View {
         case .atRest:
           EmptyView()
         case .possible(let value):
-          PullToRefreshPossibleView(cliff: cliff, color: color, value: value)
+          PullToRefreshPossibleView(cliff: cliff,
+                                    color: color,
+                                    foregroundColor: foregroundColor,
+                                    value: value)
             
         case .waitingOnRefresh,
             .triggered,

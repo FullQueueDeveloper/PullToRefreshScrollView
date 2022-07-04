@@ -11,6 +11,7 @@ struct PullToRefreshScrollView<Content: View>: View {
 
   let cliff: CGFloat
   let color: Color
+  let foregroundColor: Color
   let action: () async -> Void
   let content: () -> Content
 
@@ -19,10 +20,12 @@ struct PullToRefreshScrollView<Content: View>: View {
 
   init(cliff: CGFloat = 120,
        color: Color = .accentColor,
+       foregroundColor: Color = .white,
        action: @escaping () async -> Void,
        content: @escaping () -> Content) {
     self.cliff = cliff
     self.color = color
+    self.foregroundColor = foregroundColor
     self.action = action
     self.content = content
   }
@@ -33,7 +36,7 @@ struct PullToRefreshScrollView<Content: View>: View {
   var body: some View {
 
     ZStack {
-      PullToRefreshControl(cliff: cliff, color: color, offset: $offset, refreshControlState: $refreshControlState, action: action)
+      PullToRefreshControl(cliff: cliff, color: color, foregroundColor: foregroundColor, offset: $offset, refreshControlState: $refreshControlState, action: action)
 
       ScrollView {
         VStack(spacing: 0) {

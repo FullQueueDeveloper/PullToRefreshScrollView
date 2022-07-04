@@ -10,6 +10,7 @@ import SwiftUI
 struct PullToRefreshPossibleView: View {
   let cliff: CGFloat
   let color: Color
+  let foregroundColor: Color
 
   let value: CGFloat // 0.0 to 1.0
 
@@ -19,19 +20,19 @@ struct PullToRefreshPossibleView: View {
       Ellipse()
         .frame(width: 0.3 * cliff,
                height: 0.3 * cliff)
-        .foregroundColor(foregroundColor)
+        .foregroundColor(adjustedTintColor)
         .padding()
 
       Image(systemName: "arrow.clockwise")
-        .foregroundColor(.white)
+        .foregroundColor(foregroundColor)
 
         .rotationEffect(.degrees(180 * value * 1.1))
         .font(Font.title2.bold())
     }
-    .scaleEffect(value * 1.1)
+    .scaleEffect(0.4 + value * 0.6)
   }
 
-  var foregroundColor: Color {
+  var adjustedTintColor: Color {
     if value < 0.8 {
       return color.opacity(Double(value))
     } else {
