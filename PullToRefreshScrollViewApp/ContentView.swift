@@ -14,7 +14,7 @@ struct ContentView: View {
   var body: some View {
     PullToRefreshScrollView {
       print("sleeping")
-      try! await Task.sleep(nanoseconds: 5000000000)
+      try! await Task.sleep(nanoseconds: 1)// 5000000000)
       await MainActor.run {
         items = [
           UUID(),

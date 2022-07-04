@@ -41,9 +41,9 @@ struct PullToRefreshControl: View {
         switch refreshControlState {
         case .atRest:
           EmptyView()
-        case .possible(let float):
-          ProgressView(value: float)
-            .padding()
+        case .possible(let value):
+          PullToRefreshPossibleView(value: value)
+            
         case .waitingOnRefresh,
             .triggered,
             .interactionOngoingRefreshComplete:
