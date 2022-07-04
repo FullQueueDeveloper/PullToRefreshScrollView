@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PullToRefreshScrollView<Content: View>: View {
+public struct PullToRefreshScrollView<Content: View>: View {
 
   let cliff: CGFloat
   let color: Color
@@ -18,11 +18,11 @@ struct PullToRefreshScrollView<Content: View>: View {
   @State
   var refreshControlState: PullToRefreshControlState = .atRest
 
-  init(cliff: CGFloat = 120,
-       color: Color = .accentColor,
-       foregroundColor: Color = .white,
-       action: @escaping () async -> Void,
-       content: @escaping () -> Content) {
+  public init(cliff: CGFloat = 120,
+              color: Color = .accentColor,
+              foregroundColor: Color = .white,
+              action: @escaping () async -> Void,
+              content: @escaping () -> Content) {
     self.cliff = cliff
     self.color = color
     self.foregroundColor = foregroundColor
@@ -33,7 +33,7 @@ struct PullToRefreshScrollView<Content: View>: View {
   @State var offset: CGFloat = 0
   @State var contentPadding: CGFloat = 0
 
-  var body: some View {
+  public var body: some View {
 
     ZStack {
       PullToRefreshControl(cliff: cliff, color: color, foregroundColor: foregroundColor, offset: $offset, refreshControlState: $refreshControlState, action: action)
