@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct PullToRefreshPossibleView: View {
-  let cliff: CGFloat
+struct PullToRefreshContentView: View {
   let color: Color
   let foregroundColor: Color
 
@@ -18,10 +17,10 @@ struct PullToRefreshPossibleView: View {
     ZStack {
 
       Ellipse()
-        .frame(width: 0.3 * cliff,
-               height: 0.3 * cliff)
+
         .foregroundColor(adjustedTintColor)
-        .padding()
+        
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
 
       Image(systemName: "arrow.clockwise")
         .foregroundColor(foregroundColor)

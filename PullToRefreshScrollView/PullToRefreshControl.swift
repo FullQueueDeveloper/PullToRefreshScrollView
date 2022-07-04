@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct PullToRefreshControl: View {
+struct PullToRefreshControl<RefreshContent: View>: View {
 
-  let cliff: CGFloat
-  let color: Color
-  let foregroundColor: Color
+  let threshold: CGFloat
   @Binding var offset: CGFloat
   @Binding var refreshControlState: PullToRefreshControlState
+
   let action: () async -> Void
+  let refreshContent: (CGFloat) -> RefreshContent
 
   private let atRestDistance: CGFloat = 1
 
@@ -30,10 +30,12 @@ struct PullToRefreshControl: View {
         case .atRest:
           EmptyView()
         case .possible(let value):
-          PullToRefreshPossibleView(cliff: cliff,
-                                    color: color,
-                                    foregroundColor: foregroundColor,
-                                    value: value)
+          refreshContent(value)
+//          PullToRefreshContentView(threshold: threshold,
+//                                    color: color,
+//                                    foregroundColor: foregroundColor,
+//                                    value: value)
+//          .frame(width: 0.3 * threshold, height: 0.3 * threshold)
 
         case .waitingOnRefresh,
             .triggered,
@@ -54,10 +56,10 @@ struct PullToRefreshControl: View {
     if isInteractionActive {
       switch refreshControlState {
       case .atRest:
-        self.refreshControlState = .possible(min(cliff, offset)/cliff)
+        self.refreshControlState = .possible(min(threshold, offset)/threshold)
       case .possible:
-        if offset < cliff {
-          self.refreshControlState = .possible(min(cliff, offset)/cliff)
+        if offset < threshold {
+          self.refreshControlState = .possible(min(threshold, offset)/threshold)
         } else {
           triggerRefresh()
           self.refreshControlState = .triggered

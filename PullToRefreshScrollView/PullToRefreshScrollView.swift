@@ -7,26 +7,29 @@
 
 import SwiftUI
 
-public struct PullToRefreshScrollView<Content: View>: View {
+public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View {
 
-  let cliff: CGFloat
+  let threshold: CGFloat
   let color: Color
   let foregroundColor: Color
   let action: () async -> Void
+  let refreshContent: (CGFloat) -> RefreshContent
   let content: () -> Content
 
   @State
   var refreshControlState: PullToRefreshControlState = .atRest
 
-  public init(cliff: CGFloat = 120,
+  public init(threshold: CGFloat = 120,
               color: Color = .accentColor,
               foregroundColor: Color = .white,
               action: @escaping () async -> Void,
+              refreshContent: @escaping (CGFloat) -> RefreshContent,
               content: @escaping () -> Content) {
-    self.cliff = cliff
+    self.threshold = threshold
     self.color = color
     self.foregroundColor = foregroundColor
     self.action = action
+    self.refreshContent = refreshContent
     self.content = content
   }
 
@@ -36,7 +39,11 @@ public struct PullToRefreshScrollView<Content: View>: View {
   public var body: some View {
 
     ZStack {
-      PullToRefreshControl(cliff: cliff, color: color, foregroundColor: foregroundColor, offset: $offset, refreshControlState: $refreshControlState, action: action)
+      PullToRefreshControl(threshold: threshold,
+                           offset: $offset,
+                           refreshControlState: $refreshControlState,
+                           action: action,
+                           refreshContent: refreshContent)
 
       ScrollView {
         VStack(spacing: 0) {
@@ -64,9 +71,9 @@ public struct PullToRefreshScrollView<Content: View>: View {
     case .possible, .atRest, .interactionOngoingRefreshComplete:
       return 0
     case .triggered:
-      return cliff * 0.5
+      return threshold * 0.5
     case .waitingOnRefresh:
-      return cliff * 0.5
+      return threshold * 0.5
     }
   }
 

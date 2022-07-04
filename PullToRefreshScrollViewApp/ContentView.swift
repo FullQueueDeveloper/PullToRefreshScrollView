@@ -79,6 +79,10 @@ struct ContentView: View {
             UUID(),
           ]
         }
+      } refreshContent: { value in
+        PullToRefreshContentView(color: .red, foregroundColor: .black, value: value)
+          .frame(width: 40, height: 40)
+          .padding()
       } content: {
         VStack(alignment: .leading, spacing: 16) {
           ForEach(items, id: \.hashValue) { item in
