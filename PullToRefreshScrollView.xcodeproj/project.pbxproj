@@ -17,6 +17,7 @@
 		D3E1472928736707007E57EA /* PullToRefreshScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472828736707007E57EA /* PullToRefreshScrollView.swift */; };
 		D3E1472B2873671A007E57EA /* PullToRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472A2873671A007E57EA /* PullToRefreshControl.swift */; };
 		D3E1472D287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */; };
+		D3E1472F287372D4007E57EA /* PullToRefreshDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472E287372D4007E57EA /* PullToRefreshDistanceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		D3E1472828736707007E57EA /* PullToRefreshScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshScrollView.swift; sourceTree = "<group>"; };
 		D3E1472A2873671A007E57EA /* PullToRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshControl.swift; sourceTree = "<group>"; };
 		D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshDistancePreferenceKey.swift; sourceTree = "<group>"; };
+		D3E1472E287372D4007E57EA /* PullToRefreshDistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshDistanceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				D3E1472828736707007E57EA /* PullToRefreshScrollView.swift */,
 				D3E1472A2873671A007E57EA /* PullToRefreshControl.swift */,
 				D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */,
+				D3E1472E287372D4007E57EA /* PullToRefreshDistanceView.swift */,
 			);
 			path = PullToRefreshScrollView;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				D3E14700287366C8007E57EA /* ContentView.swift in Sources */,
 				D3E1472928736707007E57EA /* PullToRefreshScrollView.swift in Sources */,
 				D3E146FE287366C8007E57EA /* PullToRefreshScrollViewApp.swift in Sources */,
+				D3E1472F287372D4007E57EA /* PullToRefreshDistanceView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,17 +12,22 @@ struct PullToRefreshScrollView<Content: View>: View {
   let action: () async -> Void
   let content: () -> Content
 
-  var body: some View {
-    ScrollView {
+  @State var offset: CGFloat = 0
 
-      ZStack {
-        PullToRefreshControl(coordinateSpaceName: coordinateSpaceName,
-                           action: action)
-        
+  var body: some View {
+
+    ZStack {
+      PullToRefreshControl(offset: $offset, action: action)
+      ScrollView {
+
         content()
+          .background(        PullToRefreshDistanceView(
+            offset: $offset,
+            coordinateSpaceName: coordinateSpaceName))
       }
+      .coordinateSpace(name: coordinateSpaceName)
     }
-    .coordinateSpace(name: coordinateSpaceName)
+
   }
 
   @State var uuid: UUID = UUID()

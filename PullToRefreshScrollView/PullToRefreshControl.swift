@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-
 struct PullToRefreshControl: View {
 
-  let atRestDistance: CGFloat = 0
+  @Binding var offset: CGFloat
+  
+  let atRestDistance: CGFloat = 1
   let cliff: CGFloat = 100.0
-  let coordinateSpaceName: String
+
   let action: () async -> Void
 
-  @State var offset: CGFloat = 0
   @State var refreshControlState: RefreshControlState = .atRest
 
   enum RefreshControlState: Equatable {
@@ -35,7 +35,7 @@ struct PullToRefreshControl: View {
   }
 
   var body: some View {
-    GeometryReader { geo in
+    VStack {
       HStack {
         Spacer()
         switch refreshControlState {
@@ -53,18 +53,9 @@ struct PullToRefreshControl: View {
         }
         Spacer()
       }
-      .preference(key: PullToRefreshDistancePreferenceKey.self,
-                  value: [geo.frame(in: .named(coordinateSpaceName))])
-      .onPreferenceChange(PullToRefreshDistancePreferenceKey.self) { frames in
-        guard let frame = frames.first else {
-          return
-        }
-        let offset = frame.minY
-        print("offset:", offset)
-        self.offset = offset
-        update()
-      }
+      Spacer()
     }
+    .onChange(of: offset, perform: { _ in update() })
     .onChange(of: refreshControlState, perform: { newValue in
       print(newValue)
     })
