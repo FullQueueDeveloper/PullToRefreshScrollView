@@ -17,17 +17,18 @@ struct PullToRefreshPossibleView: View {
     ZStack {
 
       Ellipse()
-        .frame(width: min(value * cliff, 0.3 * cliff),
-               height: min(value * cliff, 0.3 * cliff))
+        .frame(width: 0.3 * cliff,
+               height: 0.3 * cliff)
         .foregroundColor(foregroundColor)
         .padding()
 
       Image(systemName: "arrow.clockwise")
         .foregroundColor(.white)
 
-        .rotationEffect(.degrees(180 * value))
+        .rotationEffect(.degrees(180 * value * 1.1))
         .font(Font.title2.bold())
     }
+    .scaleEffect(value * 1.1)
   }
 
   var foregroundColor: Color {
