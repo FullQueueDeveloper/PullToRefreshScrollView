@@ -9,9 +9,19 @@ import SwiftUI
 
 @main
 struct PullToRefreshScrollViewApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      NavigationView {
+        ContentView()
+          .navigationTitle("Pull to refresh")
+          .toolbar {
+            Button {
+              print("settings")
+            } label: {
+               Label("Settings", systemImage: "gear")
+            }
+          }
+      }
     }
+  }
 }

@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct PullToRefreshScrollView<Content: View>: View {
-  
-  @Binding var refreshState: PullToRefreshControl.RefreshState
 
-  let action: () -> Void
+  let action: () async -> Void
   let content: () -> Content
 
   var body: some View {
     ScrollView {
-      PullToRefreshControl(coordinateSpaceName: coordinateSpaceName,
-                           action: action,
-                           refreshState: $refreshState)
-      content()
+
+      ZStack {
+        PullToRefreshControl(coordinateSpaceName: coordinateSpaceName,
+                           action: action)
+        
+        content()
+      }
     }
     .coordinateSpace(name: coordinateSpaceName)
   }

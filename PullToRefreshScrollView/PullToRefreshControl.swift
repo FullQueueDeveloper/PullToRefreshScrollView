@@ -10,19 +10,13 @@ import SwiftUI
 
 struct PullToRefreshControl: View {
 
+  let atRestDistance: CGFloat = 0
+  let cliff: CGFloat = 100.0
   let coordinateSpaceName: String
-  let action: () -> Void
+  let action: () async -> Void
 
-  @Binding var refreshState: RefreshState
-
-  private let cliff: Float = 100.0
-
-  @State var offset: Float = 0
+  @State var offset: CGFloat = 0
   @State var refreshControlState: RefreshControlState = .atRest
-
-  enum RefreshState {
-    case idle, active
-  }
 
   enum RefreshControlState: Equatable {
     case atRest // default state
@@ -34,6 +28,10 @@ struct PullToRefreshControl: View {
     case waitingOnRefresh // interaction has ended, but refresh hasn't completed yet
 
     case interactionOngoingRefreshComplete // interaction still ongoing, and refresh has completed
+  }
+
+  var isInteractionActive: Bool {
+    offset > atRestDistance
   }
 
   var body: some View {
@@ -61,40 +59,25 @@ struct PullToRefreshControl: View {
         guard let frame = frames.first else {
           return
         }
-        let offset = frame.maxY
-        self.offset = Float(offset)
+        let offset = frame.minY
+        print("offset:", offset)
+        self.offset = offset
         update()
       }
     }
     .onChange(of: refreshControlState, perform: { newValue in
       print(newValue)
     })
-    .onChange(of: refreshState, perform: { newValue in
-      switch newValue {
-      case .active:
-        return
-      case .idle:
-        switch refreshControlState {
-        case .triggered:
-          self.refreshControlState = .interactionOngoingRefreshComplete
-        case .waitingOnRefresh:
-          self.refreshControlState = .atRest
-        case .interactionOngoingRefreshComplete, .atRest, .possible:
-          break
-        }
-      }
-    })
-    .padding(.top, -0.5 * CGFloat(cliff))
   }
 
   func update() {
-    if offset > 0 {
+    if isInteractionActive {
       switch refreshControlState {
       case .atRest:
-        self.refreshControlState = .possible(min(cliff, offset)/cliff)
+        self.refreshControlState = .possible(Float(min(cliff, offset)/cliff))
       case .possible:
         if offset < cliff {
-          self.refreshControlState = .possible(min(cliff, offset)/cliff)
+          self.refreshControlState = .possible(Float(min(cliff, offset)/cliff))
         } else {
           triggerRefresh()
           self.refreshControlState = .triggered
@@ -102,7 +85,6 @@ struct PullToRefreshControl: View {
       case .waitingOnRefresh, .triggered, .interactionOngoingRefreshComplete:
         return
       }
-
     } else {
       switch refreshControlState {
       case .triggered:
@@ -118,6 +100,27 @@ struct PullToRefreshControl: View {
   }
 
   func triggerRefresh() {
-    action()
+    Task {
+      await action()
+
+      await MainActor.run {
+        switch refreshControlState {
+        case .atRest:
+          break
+        case .possible:
+          break
+        case .triggered:
+          if isInteractionActive {
+            self.refreshControlState = .interactionOngoingRefreshComplete
+          } else {
+            self.refreshControlState = .atRest
+          }
+        case .waitingOnRefresh:
+          self.refreshControlState = .atRest
+        case .interactionOngoingRefreshComplete:
+         break
+        }
+      }
+    }
   }
 }
