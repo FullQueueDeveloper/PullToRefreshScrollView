@@ -13,7 +13,7 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
   let color: Color
   let foregroundColor: Color
   let action: () async -> Void
-  let refreshContent: (CGFloat) -> RefreshContent
+  let refreshContent: (PullToRefreshControlState) -> RefreshContent
   let content: () -> Content
 
   @State
@@ -23,8 +23,8 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
               color: Color = .accentColor,
               foregroundColor: Color = .white,
               action: @escaping () async -> Void,
-              refreshContent: @escaping (CGFloat) -> RefreshContent,
-              content: @escaping () -> Content) {
+              @ViewBuilder refreshContent: @escaping (PullToRefreshControlState) -> RefreshContent,
+              @ViewBuilder content: @escaping () -> Content) {
     self.threshold = threshold
     self.color = color
     self.foregroundColor = foregroundColor
@@ -58,7 +58,6 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
           }
         }
       }
-      .coordinateSpace(name: coordinateSpaceName)
     }
     .onPreferenceChange(PullToRefreshDistancePreferenceKey.self) { offset in
       self.offset = offset
@@ -79,10 +78,5 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
     case .waitingOnRefresh:
       return threshold * 0.5
     }
-  }
-
-  @State var uuid: UUID = UUID()
-  var coordinateSpaceName: String {
-    "pullToRefresh-\(uuid)"
   }
 }
