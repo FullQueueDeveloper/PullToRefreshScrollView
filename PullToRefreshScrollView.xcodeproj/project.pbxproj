@@ -14,6 +14,9 @@
 		D3E1470F287366C9007E57EA /* PullToRefreshScrollViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1470E287366C9007E57EA /* PullToRefreshScrollViewTests.swift */; };
 		D3E14719287366C9007E57EA /* PullToRefreshScrollViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E14718287366C9007E57EA /* PullToRefreshScrollViewUITests.swift */; };
 		D3E1471B287366C9007E57EA /* PullToRefreshScrollViewUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1471A287366C9007E57EA /* PullToRefreshScrollViewUITestsLaunchTests.swift */; };
+		D3E1472928736707007E57EA /* PullToRefreshScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472828736707007E57EA /* PullToRefreshScrollView.swift */; };
+		D3E1472B2873671A007E57EA /* PullToRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472A2873671A007E57EA /* PullToRefreshControl.swift */; };
+		D3E1472D287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		D3E14714287366C9007E57EA /* PullToRefreshScrollViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PullToRefreshScrollViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3E14718287366C9007E57EA /* PullToRefreshScrollViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshScrollViewUITests.swift; sourceTree = "<group>"; };
 		D3E1471A287366C9007E57EA /* PullToRefreshScrollViewUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshScrollViewUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D3E1472828736707007E57EA /* PullToRefreshScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshScrollView.swift; sourceTree = "<group>"; };
+		D3E1472A2873671A007E57EA /* PullToRefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshControl.swift; sourceTree = "<group>"; };
+		D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshDistancePreferenceKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +80,8 @@
 		D3E146F1287366C8007E57EA = {
 			isa = PBXGroup;
 			children = (
-				D3E146FC287366C8007E57EA /* PullToRefreshScrollView */,
+				D3E14727287366F0007E57EA /* PullToRefreshScrollView */,
+				D3E146FC287366C8007E57EA /* PullToRefreshScrollViewApp */,
 				D3E1470D287366C9007E57EA /* PullToRefreshScrollViewTests */,
 				D3E14717287366C9007E57EA /* PullToRefreshScrollViewUITests */,
 				D3E146FB287366C8007E57EA /* Products */,
@@ -91,7 +98,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D3E146FC287366C8007E57EA /* PullToRefreshScrollView */ = {
+		D3E146FC287366C8007E57EA /* PullToRefreshScrollViewApp */ = {
 			isa = PBXGroup;
 			children = (
 				D3E146FD287366C8007E57EA /* PullToRefreshScrollViewApp.swift */,
@@ -99,7 +106,7 @@
 				D3E14701287366C9007E57EA /* Assets.xcassets */,
 				D3E14703287366C9007E57EA /* Preview Content */,
 			);
-			path = PullToRefreshScrollView;
+			path = PullToRefreshScrollViewApp;
 			sourceTree = "<group>";
 		};
 		D3E14703287366C9007E57EA /* Preview Content */ = {
@@ -125,6 +132,16 @@
 				D3E1471A287366C9007E57EA /* PullToRefreshScrollViewUITestsLaunchTests.swift */,
 			);
 			path = PullToRefreshScrollViewUITests;
+			sourceTree = "<group>";
+		};
+		D3E14727287366F0007E57EA /* PullToRefreshScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				D3E1472828736707007E57EA /* PullToRefreshScrollView.swift */,
+				D3E1472A2873671A007E57EA /* PullToRefreshControl.swift */,
+				D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */,
+			);
+			path = PullToRefreshScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,7 +274,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3E1472D287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift in Sources */,
+				D3E1472B2873671A007E57EA /* PullToRefreshControl.swift in Sources */,
 				D3E14700287366C8007E57EA /* ContentView.swift in Sources */,
+				D3E1472928736707007E57EA /* PullToRefreshScrollView.swift in Sources */,
 				D3E146FE287366C8007E57EA /* PullToRefreshScrollViewApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,7 +436,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PullToRefreshScrollView/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PullToRefreshScrollViewApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -444,7 +464,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PullToRefreshScrollView/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PullToRefreshScrollViewApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
