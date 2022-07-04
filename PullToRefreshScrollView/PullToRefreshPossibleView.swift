@@ -16,14 +16,17 @@ struct PullToRefreshPossibleView: View {
   var body: some View {
     ZStack {
 
-
       Ellipse()
-        .frame(width: min(value * cliff, 0.2 * cliff),
-               height: min(value * cliff, 0.2 * cliff))
+        .frame(width: min(value * cliff, 0.3 * cliff),
+               height: min(value * cliff, 0.3 * cliff))
         .foregroundColor(foregroundColor)
         .padding()
+
       Image(systemName: "arrow.clockwise")
         .foregroundColor(.white)
+
+        .rotationEffect(.degrees(180 * value))
+        .font(Font.title2.bold())
     }
   }
 

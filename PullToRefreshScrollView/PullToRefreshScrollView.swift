@@ -60,7 +60,9 @@ struct PullToRefreshScrollView<Content: View>: View {
     switch refreshControlState {
     case .possible, .atRest, .interactionOngoingRefreshComplete:
       return 0
-    case .triggered, .waitingOnRefresh:
+    case .triggered:
+      return cliff * 0.5
+    case .waitingOnRefresh:
       return cliff * 0.5
     }
   }
