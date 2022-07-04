@@ -10,42 +10,37 @@ import SwiftUI
 struct PullToRefreshPossibleView: View {
   let value: Float // 0.0 to 1.0
 
-//  @Environment(\.accentColor)
-
   var width: CGFloat {
-    if value < 0.3 {
+    if value < 0.25 {
       return CGFloat(value) * 100
     } else {
-      return 30
+      return 25
     }
   }
 
   @ViewBuilder
   var shape: some View {
-    if value < 0.3 {
-       Circle()
-    } else { //if value < 0.8 {
+    if value < 0.2 {
+      Circle()
+    } else if value < 0.3 {
       RoundedRectangle(cornerRadius: 16)
-    } //else {
-//      Ellipse()
-//      RoundedRectangle(cornerRadius: CGFloat(value) * 16)
-//    }
+    } else {
+      Ellipse()
+    }
   }
 
   var body: some View {
     shape
       .frame(width: width, height: CGFloat(value) * 100, alignment: .top)
-      .aspectRatio(contentMode: .fill)
-      .foregroundColor(fg)
+      .foregroundColor(color)
       .padding()
   }
 
-  var fg: Color {
-    if value < 0.8 {
+  var color: Color {
+    if value < 0.7 {
       return .accentColor.opacity(Double(value))
     } else {
       return .accentColor
     }
   }
-
 }
