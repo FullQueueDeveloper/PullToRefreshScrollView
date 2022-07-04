@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View {
-
+  private let atRestDistance: CGFloat = 1
   let threshold: CGFloat
   let color: Color
   let foregroundColor: Color
@@ -38,12 +38,10 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
 
   public var body: some View {
 
-    ZStack {
-      PullToRefreshControl(threshold: threshold,
-                           offset: $offset,
-                           refreshControlState: $refreshControlState,
-                           action: action,
-                           refreshContent: refreshContent)
+    ZStack(alignment: .top) {
+
+      refreshContent(refreshControlState)
+      
       GeometryReader { geo in
         ScrollView {
           VStack(spacing: 0) {
@@ -62,9 +60,64 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
     .onPreferenceChange(PullToRefreshDistancePreferenceKey.self) { offset in
       self.offset = offset
     }
+    .onChange(of: offset, perform: { _ in update() })
     .onChange(of: refreshControlState) { newValue in
       withAnimation(.easeInOut) {
         self.contentPadding = contentPadding(refreshControlState: newValue)
+      }
+    }
+  }
+
+  func update() {
+    if isInteractionActive {
+      switch refreshControlState {
+      case .atRest:
+        self.refreshControlState = .possible(min(threshold, offset)/threshold)
+      case .possible:
+        if offset < threshold {
+          self.refreshControlState = .possible(min(threshold, offset)/threshold)
+        } else {
+          triggerRefresh()
+          self.refreshControlState = .triggered
+        }
+      case .waitingOnRefresh, .triggered, .interactionOngoingRefreshComplete:
+        return
+      }
+    } else {
+      switch refreshControlState {
+      case .triggered:
+        self.refreshControlState = .waitingOnRefresh
+      case .possible:
+        self.refreshControlState = .atRest
+      case .interactionOngoingRefreshComplete:
+        self.refreshControlState = .atRest
+      case .atRest, .waitingOnRefresh:
+        break
+      }
+    }
+  }
+
+  func triggerRefresh() {
+    Task {
+      await action()
+
+      await MainActor.run {
+        switch refreshControlState {
+        case .atRest:
+          break
+        case .possible:
+          break
+        case .triggered:
+          if isInteractionActive {
+            self.refreshControlState = .interactionOngoingRefreshComplete
+          } else {
+            self.refreshControlState = .atRest
+          }
+        case .waitingOnRefresh:
+          self.refreshControlState = .atRest
+        case .interactionOngoingRefreshComplete:
+         break
+        }
       }
     }
   }
@@ -78,5 +131,9 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
     case .waitingOnRefresh:
       return threshold * 0.5
     }
+  }
+
+  var isInteractionActive: Bool {
+    offset > atRestDistance
   }
 }

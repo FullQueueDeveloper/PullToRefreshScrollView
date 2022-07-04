@@ -31,8 +31,8 @@ struct ContentView: View {
           PullToRefreshContentView(color: .red,
                                    foregroundColor: .black,
                                    value: value)
-            .frame(width: 40, height: 40)
-            .padding()
+          .frame(width: 40, height: 40)
+          .padding()
         case .triggered, .waitingOnRefresh, .interactionOngoingRefreshComplete:
           ProgressView()
             .progressViewStyle(.circular)
