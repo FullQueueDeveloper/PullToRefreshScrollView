@@ -13,17 +13,17 @@ struct ContentView: View {
 
   var body: some View {
     VStack(spacing: 0) {
-//      HStack {
-//        Text("hello")
-//        Spacer()
-//        Text("goodbye")
-//
-//
-//      }
-//      .padding()
-//      .background(Color.gray)
 
-      PullToRefreshScrollView(color: .red) {
+
+      HStack {
+        Text("Pull")
+        Spacer()
+        Text("To refresh")
+      }
+      .padding()
+      .background(Color.gray)
+
+      PullToRefreshScrollView(color: .accentColor) {
         print("sleeping")
         try! await Task.sleep(nanoseconds: 5000000000)
         await MainActor.run {

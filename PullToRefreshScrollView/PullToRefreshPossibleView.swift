@@ -15,13 +15,15 @@ struct PullToRefreshPossibleView: View {
 
   var body: some View {
     ZStack {
-      Image(systemName: "arrow.clockwise")
+
 
       Ellipse()
         .frame(width: min(value * cliff, 0.2 * cliff),
-               height: value * cliff)
+               height: min(value * cliff, 0.2 * cliff))
         .foregroundColor(foregroundColor)
         .padding()
+      Image(systemName: "arrow.clockwise")
+        .foregroundColor(.white)
     }
   }
 

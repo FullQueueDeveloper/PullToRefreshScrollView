@@ -35,8 +35,9 @@ struct PullToRefreshControl: View {
             .triggered,
             .interactionOngoingRefreshComplete:
           ProgressView()
-            .scaleEffect(2)
+            
             .progressViewStyle(.circular)
+            .padding()
         }
         Spacer()
       }

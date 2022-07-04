@@ -34,16 +34,14 @@ struct PullToRefreshScrollView<Content: View>: View {
 
     ZStack {
       PullToRefreshControl(cliff: cliff, color: color, offset: $offset, refreshControlState: $refreshControlState, action: action)
-//        .padding(.top, -10)
+
       ScrollView {
         VStack(spacing: 0) {
 
-            Spacer()
-              .frame(height: contentPadding)
-
+          Spacer()
+            .frame(height: contentPadding)
 
           content()
-
         }
         .background(PullToRefreshDistanceView(
           offset: $offset,
@@ -60,12 +58,10 @@ struct PullToRefreshScrollView<Content: View>: View {
 
   func contentPadding(refreshControlState: PullToRefreshControlState) -> CGFloat {
     switch refreshControlState {
-    case .atRest: return 0
-    case .possible: return 0
-    case .triggered, .waitingOnRefresh:
-      return cliff * 0.25
-    case .interactionOngoingRefreshComplete:
+    case .possible, .atRest, .interactionOngoingRefreshComplete:
       return 0
+    case .triggered, .waitingOnRefresh:
+      return cliff * 0.5
     }
   }
 

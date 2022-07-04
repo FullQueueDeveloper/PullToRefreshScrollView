@@ -11,7 +11,7 @@ import SwiftUI
 struct PullToRefreshScrollViewApp: App {
   var body: some Scene {
     WindowGroup {
-      NavigationView {
+//      NavigationView {
         ContentView()
           .navigationTitle("Pull to refresh")
           .toolbar {
@@ -21,7 +21,7 @@ struct PullToRefreshScrollViewApp: App {
                Label("Settings", systemImage: "gear")
             }
           }
-      }
+//      }
     }
   }
 }

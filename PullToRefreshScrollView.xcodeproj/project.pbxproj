@@ -19,7 +19,6 @@
 		D3E1472D287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */; };
 		D3E1472F287372D4007E57EA /* PullToRefreshDistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472E287372D4007E57EA /* PullToRefreshDistanceView.swift */; };
 		D3E147312873768C007E57EA /* PullToRefreshPossibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E147302873768C007E57EA /* PullToRefreshPossibleView.swift */; };
-		D3E147332873883B007E57EA /* PullToRefreshProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E147322873883B007E57EA /* PullToRefreshProgressView.swift */; };
 		D3E1473528738F5E007E57EA /* PullToRefreshControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1473428738F5E007E57EA /* PullToRefreshControlState.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,7 +55,6 @@
 		D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshDistancePreferenceKey.swift; sourceTree = "<group>"; };
 		D3E1472E287372D4007E57EA /* PullToRefreshDistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshDistanceView.swift; sourceTree = "<group>"; };
 		D3E147302873768C007E57EA /* PullToRefreshPossibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshPossibleView.swift; sourceTree = "<group>"; };
-		D3E147322873883B007E57EA /* PullToRefreshProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshProgressView.swift; sourceTree = "<group>"; };
 		D3E1473428738F5E007E57EA /* PullToRefreshControlState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshControlState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,7 +148,6 @@
 				D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */,
 				D3E1472E287372D4007E57EA /* PullToRefreshDistanceView.swift */,
 				D3E147302873768C007E57EA /* PullToRefreshPossibleView.swift */,
-				D3E147322873883B007E57EA /* PullToRefreshProgressView.swift */,
 				D3E1473428738F5E007E57EA /* PullToRefreshControlState.swift */,
 			);
 			path = PullToRefreshScrollView;
@@ -288,7 +285,6 @@
 			files = (
 				D3E1473528738F5E007E57EA /* PullToRefreshControlState.swift in Sources */,
 				D3E1472D287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift in Sources */,
-				D3E147332873883B007E57EA /* PullToRefreshProgressView.swift in Sources */,
 				D3E147312873768C007E57EA /* PullToRefreshPossibleView.swift in Sources */,
 				D3E1472B2873671A007E57EA /* PullToRefreshControl.swift in Sources */,
 				D3E14700287366C8007E57EA /* ContentView.swift in Sources */,
