@@ -15,18 +15,14 @@ struct GistContentView: View {
   var body: some View {
     RefreshableScrollView(threshold: 50, actionState: $actionState) {
 
-        print("start")
         try! await Task.sleep(nanoseconds: 3_000_000_000) //do something for 3 seconds
-        print("done")
+
       await MainActor.run {
         self.data = [UUID(), UUID(), UUID(), UUID(), UUID()]
         withAnimation {
           actionState = .idle
         }
       }
-
-
-
     } refreshContent: {
       Group {
         switch actionState {
@@ -48,13 +44,13 @@ struct GistContentView: View {
   }
 }
 
-enum RefreshableScrollViewActionState: Equatable {
+public enum RefreshableScrollViewActionState: Equatable {
   case idle
   case changing(_ fraction: Float)
   case pending
 }
 
-struct RefreshableScrollView<Content: View, RefreshContent: View>: View {
+public struct RefreshableScrollView<Content: View, RefreshContent: View>: View {
   @Binding private var actionState: RefreshableScrollViewActionState
 
   let threshold: CGFloat
@@ -62,7 +58,7 @@ struct RefreshableScrollView<Content: View, RefreshContent: View>: View {
   let refreshContent: () -> RefreshContent
   let action: () async -> Void
 
-  init(
+  public init(
     threshold: CGFloat = 40,
     actionState: Binding<RefreshableScrollViewActionState>,
     action: @escaping () async -> Void,
@@ -89,7 +85,7 @@ struct RefreshableScrollView<Content: View, RefreshContent: View>: View {
     }
   }
 
-  var body: some View {
+  public var body: some View {
     ZStack(alignment: .top) {
       if actionState != .idle {
         refreshContent()
@@ -126,7 +122,6 @@ struct RefreshableScrollView<Content: View, RefreshContent: View>: View {
               Task(priority: .userInitiated) {
                 await action()
               }
-
             }
           }
           else if offset <= 0 {
