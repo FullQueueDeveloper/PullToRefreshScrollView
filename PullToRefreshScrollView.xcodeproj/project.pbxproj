@@ -44,6 +44,7 @@
 		D357431B2873B6C8001B7BB9 /* PullToRefreshController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshController.swift; sourceTree = "<group>"; };
 		D396413C2874E1DB00EB0380 /* DefaultRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRefreshView.swift; sourceTree = "<group>"; };
 		D396413E2874E90700EB0380 /* gist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = gist.swift; path = PullToRefreshScrollViewApp/gist.swift; sourceTree = "<group>"; };
+		D39641402874EC1F00EB0380 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D3E146FA287366C8007E57EA /* PullToRefreshScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PullToRefreshScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3E146FD287366C8007E57EA /* PullToRefreshScrollViewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshScrollViewApp.swift; sourceTree = "<group>"; };
 		D3E146FF287366C8007E57EA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		D3E146F1287366C8007E57EA = {
 			isa = PBXGroup;
 			children = (
+				D39641402874EC1F00EB0380 /* README.md */,
 				D396413E2874E90700EB0380 /* gist.swift */,
 				D3E14727287366F0007E57EA /* PullToRefreshScrollView */,
 				D3E146FC287366C8007E57EA /* PullToRefreshScrollViewApp */,

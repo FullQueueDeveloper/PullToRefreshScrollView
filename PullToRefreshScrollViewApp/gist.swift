@@ -15,7 +15,7 @@ struct GistContentView: View {
   var body: some View {
     RefreshableScrollView(threshold: 50, actionState: $actionState) {
 
-        try! await Task.sleep(nanoseconds: 3_000_000_000) //do something for 3 seconds
+      try! await Task.sleep(nanoseconds: 3_000_000_000) //do something for 3 seconds
 
       await MainActor.run {
         self.data = [UUID(), UUID(), UUID(), UUID(), UUID()]
