@@ -11,13 +11,12 @@ import SwiftUI
 final class PullToRefreshController: ObservableObject {
   private let threshold: CGFloat
   private let action: () async -> ()
-//  private let atRestDistance: CGFloat = 1
+  private let atRestDistance: CGFloat = 1
 
-  var spinnerHeight: CGFloat = 0
-  
   @Published var offset: CGFloat = 0 {
     didSet {
       update()
+      print(refreshControlState)
     }
   }
   @Published var refreshControlState: PullToRefreshControlState = .atRest
@@ -28,22 +27,23 @@ final class PullToRefreshController: ObservableObject {
   }
 
   func update() {
-    withAnimation {
-      if isInteractionActive {
-        switch refreshControlState {
-        case .atRest:
+
+    if isInteractionActive {
+      switch refreshControlState {
+      case .atRest:
+        self.refreshControlState = .possible(min(threshold, offset)/threshold)
+      case .possible:
+        if offset < threshold {
           self.refreshControlState = .possible(min(threshold, offset)/threshold)
-        case .possible:
-          if offset < threshold {
-            self.refreshControlState = .possible(min(threshold, offset)/threshold)
-          } else {
-            triggerRefresh()
-            self.refreshControlState = .triggered
-          }
-        case .waitingOnRefresh, .triggered, .interactionOngoingRefreshComplete:
-          return
+        } else {
+          triggerRefresh()
+          self.refreshControlState = .triggered
         }
-      } else {
+      case .waitingOnRefresh, .triggered, .interactionOngoingRefreshComplete:
+        return
+      }
+    } else {
+      withAnimation(.easeInOut(duration: 0.15)) {
         switch refreshControlState {
         case .triggered:
           self.refreshControlState = .waitingOnRefresh
@@ -55,11 +55,12 @@ final class PullToRefreshController: ObservableObject {
           break
         }
       }
+
     }
   }
 
   var isInteractionActive: Bool {
-    offset > spinnerHeight
+    offset > atRestDistance
   }
 
   func triggerRefresh() {
@@ -67,7 +68,7 @@ final class PullToRefreshController: ObservableObject {
       await action()
 
       await MainActor.run {
-        withAnimation {
+
           switch refreshControlState {
           case .atRest:
             break
@@ -77,14 +78,18 @@ final class PullToRefreshController: ObservableObject {
             if isInteractionActive {
               self.refreshControlState = .interactionOngoingRefreshComplete
             } else {
-              self.refreshControlState = .atRest
+              withAnimation {
+                self.refreshControlState = .atRest
+              }
             }
           case .waitingOnRefresh:
-            self.refreshControlState = .atRest
+            withAnimation {
+              self.refreshControlState = .atRest
+            }
           case .interactionOngoingRefreshComplete:
             break
           }
-        }
+
       }
     }
   }
