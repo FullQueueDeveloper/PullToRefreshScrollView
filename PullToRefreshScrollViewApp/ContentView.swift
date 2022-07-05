@@ -28,8 +28,9 @@ struct ContentView: View {
                                  foregroundColor: .orange,
                                  value: value)
         .frame(width: 40, height: 40)
-        .padding(2)
+        .transformEffect(.identity.translatedBy(x: 0, y: -10 + 10 * value))
       } refreshContent: {
+
         ProgressView()
           .progressViewStyle(.circular)
           .padding()

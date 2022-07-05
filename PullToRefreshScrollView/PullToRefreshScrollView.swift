@@ -38,21 +38,27 @@ public struct PullToRefreshScrollView<RefreshContent: View,
 
     GeometryReader { geo in
       ZStack(alignment: .top) {
+
         if case .possible(let value) = controller.refreshControlState, value > 0  {
           interactiveContent(value)
         }
-        ScrollView {
-//          MyLayout(controller: controller)({
 
-          if controller.isSpinnerVisible {
+        if controller.isSpinnerVisibleInZStack {
+          refreshContent()
+        }
+
+
+        ScrollView {
+
+          if controller.isSpinnerVisibleInScrollView {
             refreshContent()
           }
 
-            content()
-              .anchorPreference(key: PullToRefreshDistancePreferenceKey.self, value: .top) {
-                geo[$0].y
-              }
-//          })
+          content()
+            .anchorPreference(key: PullToRefreshDistancePreferenceKey.self, value: .top) {
+              geo[$0].y
+            }
+
         }
       }
     }

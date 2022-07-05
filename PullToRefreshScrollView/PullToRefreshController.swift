@@ -85,7 +85,7 @@ final class PullToRefreshController: ObservableObject {
     }
   }
 
-  var isSpinnerVisible: Bool {
+  var isSpinnerVisibleInScrollView: Bool {
     switch refreshControlState {
     case .atRest:
       return false
@@ -93,8 +93,23 @@ final class PullToRefreshController: ObservableObject {
       return false
     case .interactionOngoingRefreshComplete:
       return false
-    case .triggered, .waitingOnRefresh:
+    case .triggered:
+      return false
+    case .waitingOnRefresh:
       return true
+    }
+  }
+
+  var isSpinnerVisibleInZStack: Bool {
+    switch refreshControlState {
+    case .atRest, .possible:
+      return false
+    case .interactionOngoingRefreshComplete:
+      return true
+    case .triggered:
+      return true
+    case .waitingOnRefresh:
+      return false
     }
   }
 }
