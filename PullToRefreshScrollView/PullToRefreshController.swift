@@ -12,7 +12,11 @@ final class PullToRefreshController: ObservableObject {
   private let threshold: CGFloat
   private let action: () async -> ()
   private let atRestDistance: CGFloat = 1
-  @Published var offset: CGFloat = 0
+  @Published var offset: CGFloat = 0 {
+    didSet {
+      update()
+    }
+  }
   @Published var refreshControlState: PullToRefreshControlState = .atRest
 
   init(threshold: CGFloat, action: @escaping () async -> ()) {

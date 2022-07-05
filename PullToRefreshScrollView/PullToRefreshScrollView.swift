@@ -13,10 +13,9 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
   let refreshContent: (PullToRefreshControlState) -> RefreshContent
   let content: () -> Content
 
-  @StateObject
-  var controller: PullToRefreshController
+  @StateObject private var controller: PullToRefreshController
 
-  public init(threshold: CGFloat = 120,
+  public init(threshold: CGFloat = 100,
               action: @escaping () async -> Void,
               @ViewBuilder refreshContent: @escaping (PullToRefreshControlState) -> RefreshContent,
               @ViewBuilder content: @escaping () -> Content) {
@@ -39,27 +38,22 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
       GeometryReader { geo in
         ScrollView {
           content()
-            .padding(.top, contentPadding)
             .anchorPreference(key: PullToRefreshDistancePreferenceKey.self, value: .top) {
               geo[$0].y
             }
+            .padding(.top, contentPadding)
         }
       }
     }
     .onPreferenceChange(PullToRefreshDistancePreferenceKey.self) { offset in
       controller.offset = offset
     }
-    .onChange(of: controller.offset, perform: { _ in controller.update() })
     .onChange(of: controller.refreshControlState) { newValue in
       withAnimation(.easeInOut) {
         self.contentPadding = contentPadding(refreshControlState: newValue)
       }
     }
   }
-
-  
-
-  
 
   func contentPadding(refreshControlState: PullToRefreshControlState) -> CGFloat {
     switch refreshControlState {
@@ -71,6 +65,4 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
       return threshold * 0.5
     }
   }
-
-
 }
