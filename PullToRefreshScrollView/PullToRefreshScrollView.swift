@@ -70,29 +70,3 @@ public struct PullToRefreshScrollView<RefreshContent: View,
     }
   }
 }
-
-
-struct MyLayout: Layout {
-
-  let controller: PullToRefreshController
-
-  func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-    proposal.replacingUnspecifiedDimensions(by: .init(width: 50, height: 50))
-  }
-
-  func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-
-    if subviews.count == 2 {
-      let spinner = subviews.first!
-      let spinnerSize = spinner.sizeThatFits(proposal)
-      spinner.place(at: .zero, proposal: proposal)
-
-      subviews.last!.place(at: CGPoint(x: 0, y: spinnerSize.height),
-                           proposal: ProposedViewSize(width: proposal.width ?? 0, height: (proposal.height ?? 0) - spinnerSize.height))
-      controller.spinnerHeight = spinnerSize.height
-    } else {
-      controller.spinnerHeight = 0
-      subviews.first!.place(at: .zero, proposal: proposal)
-    }
-  }
-}

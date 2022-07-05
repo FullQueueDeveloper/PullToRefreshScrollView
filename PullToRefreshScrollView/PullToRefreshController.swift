@@ -28,30 +28,32 @@ final class PullToRefreshController: ObservableObject {
   }
 
   func update() {
-    if isInteractionActive {
-      switch refreshControlState {
-      case .atRest:
-        self.refreshControlState = .possible(min(threshold, offset)/threshold)
-      case .possible:
-        if offset < threshold {
+    withAnimation {
+      if isInteractionActive {
+        switch refreshControlState {
+        case .atRest:
           self.refreshControlState = .possible(min(threshold, offset)/threshold)
-        } else {
-          triggerRefresh()
-          self.refreshControlState = .triggered
+        case .possible:
+          if offset < threshold {
+            self.refreshControlState = .possible(min(threshold, offset)/threshold)
+          } else {
+            triggerRefresh()
+            self.refreshControlState = .triggered
+          }
+        case .waitingOnRefresh, .triggered, .interactionOngoingRefreshComplete:
+          return
         }
-      case .waitingOnRefresh, .triggered, .interactionOngoingRefreshComplete:
-        return
-      }
-    } else {
-      switch refreshControlState {
-      case .triggered:
-        self.refreshControlState = .waitingOnRefresh
-      case .possible:
-        self.refreshControlState = .atRest
-      case .interactionOngoingRefreshComplete:
-        self.refreshControlState = .atRest
-      case .atRest, .waitingOnRefresh:
-        break
+      } else {
+        switch refreshControlState {
+        case .triggered:
+          self.refreshControlState = .waitingOnRefresh
+        case .possible:
+          self.refreshControlState = .atRest
+        case .interactionOngoingRefreshComplete:
+          self.refreshControlState = .atRest
+        case .atRest, .waitingOnRefresh:
+          break
+        }
       }
     }
   }
@@ -65,21 +67,23 @@ final class PullToRefreshController: ObservableObject {
       await action()
 
       await MainActor.run {
-        switch refreshControlState {
-        case .atRest:
-          break
-        case .possible:
-          break
-        case .triggered:
-          if isInteractionActive {
-            self.refreshControlState = .interactionOngoingRefreshComplete
-          } else {
+        withAnimation {
+          switch refreshControlState {
+          case .atRest:
+            break
+          case .possible:
+            break
+          case .triggered:
+            if isInteractionActive {
+              self.refreshControlState = .interactionOngoingRefreshComplete
+            } else {
+              self.refreshControlState = .atRest
+            }
+          case .waitingOnRefresh:
             self.refreshControlState = .atRest
+          case .interactionOngoingRefreshComplete:
+            break
           }
-        case .waitingOnRefresh:
-          self.refreshControlState = .atRest
-        case .interactionOngoingRefreshComplete:
-         break
         }
       }
     }
