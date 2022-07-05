@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
   @State var items: [UUID] = [UUID()]
+  @State var spinnerValue: CGFloat = 0
 
+  @State var timer = Timer.TimerPublisher(interval: 0.1, runLoop: .current, mode: .default).autoconnect()
   var body: some View {
 
     VStack(spacing: 0) {
@@ -30,11 +32,8 @@ struct ContentView: View {
         .frame(width: 40, height: 40)
         .transformEffect(.identity.translatedBy(x: 0, y: -10 + 10 * value))
       } refreshContent: {
-
-        ProgressView()
-          .progressViewStyle(.circular)
-          .padding()
-
+        DefaultRefreshView(color: .purple, foregroundColor: .white)
+          .frame(width: 40, height: 40)
       } content: {
         VStack(alignment: .leading, spacing: 16) {
           ForEach(items, id: \.hashValue) { item in

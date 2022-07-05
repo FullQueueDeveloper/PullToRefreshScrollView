@@ -8,8 +8,8 @@
 import SwiftUI
 
 public struct PullToRefreshScrollView<RefreshContent: View,
-                                        InteractiveContent: View,
-                                        Content: View>: View {
+                                      InteractiveContent: View,
+                                      Content: View>: View {
 
   let threshold: CGFloat
   let interactiveContent: (CGFloat) -> InteractiveContent
@@ -41,12 +41,9 @@ public struct PullToRefreshScrollView<RefreshContent: View,
 
         if case .possible(let value) = controller.refreshControlState, value > 0  {
           interactiveContent(value)
-        }
-
-        if controller.isSpinnerVisibleInZStack {
+        } else if controller.isSpinnerVisibleInZStack {
           refreshContent()
         }
-
 
         ScrollView {
 
