@@ -7,10 +7,13 @@
 
 import SwiftUI
 
-public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View {
+public struct PullToRefreshScrollView<RefreshContent: View,
+                                        InteractiveContent: View,
+                                        Content: View>: View {
 
   let threshold: CGFloat
-  let refreshContent: (PullToRefreshControlState) -> RefreshContent
+  let interactiveContent: (CGFloat) -> InteractiveContent
+  let refreshContent: () -> RefreshContent
   let content: () -> Content
   @State var refreshContentHeight: CGFloat = 0
 
@@ -18,9 +21,11 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
 
   public init(threshold: CGFloat = 100,
               action: @escaping () async -> Void,
-              @ViewBuilder refreshContent: @escaping (PullToRefreshControlState) -> RefreshContent,
+              @ViewBuilder interactiveContent: @escaping (CGFloat) -> InteractiveContent,
+              @ViewBuilder refreshContent: @escaping () -> RefreshContent,
               @ViewBuilder content: @escaping () -> Content) {
     self.threshold = threshold
+    self.interactiveContent = interactiveContent
     self.refreshContent = refreshContent
     self.content = content
 
@@ -32,15 +37,23 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
   public var body: some View {
 
     GeometryReader { geo in
-      ScrollView {
+      ZStack(alignment: .top) {
+        if case .possible(let value) = controller.refreshControlState, value > 0  {
+          interactiveContent(value)
+        }
+        ScrollView {
+//          MyLayout(controller: controller)({
 
-        MyLayout(controller: controller)({
-          refreshContent(controller.refreshControlState)
-          content()
-            .anchorPreference(key: PullToRefreshDistancePreferenceKey.self, value: .top) {
-              geo[$0].y
-            }
-        })
+          if controller.isSpinnerVisible {
+            refreshContent()
+          }
+
+            content()
+              .anchorPreference(key: PullToRefreshDistancePreferenceKey.self, value: .top) {
+                geo[$0].y
+              }
+//          })
+        }
       }
     }
     .onPreferenceChange(RefreshContentHeightPreferenceKey.self, perform: { height in

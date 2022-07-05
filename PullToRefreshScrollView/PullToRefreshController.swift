@@ -84,4 +84,17 @@ final class PullToRefreshController: ObservableObject {
       }
     }
   }
+
+  var isSpinnerVisible: Bool {
+    switch refreshControlState {
+    case .atRest:
+      return false
+    case .possible:
+      return false
+    case .interactionOngoingRefreshComplete:
+      return false
+    case .triggered, .waitingOnRefresh:
+      return true
+    }
+  }
 }

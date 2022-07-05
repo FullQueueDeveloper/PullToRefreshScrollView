@@ -23,21 +23,17 @@ struct ContentView: View {
 
       PullToRefreshScrollView {
         await refresh()
-      } refreshContent: { state in
-        switch state {
-        case .atRest:
-          EmptyView()
-        case .possible(let value):
-          PullToRefreshContentView(color: .purple,
-                                   foregroundColor: .orange,
-                                   value: value)
-          .frame(width: 40, height: 40)
+      } interactiveContent: { value in
+        PullToRefreshInteractiveView(color: .purple,
+                                 foregroundColor: .orange,
+                                 value: value)
+        .frame(width: 40, height: 40)
+        .padding(2)
+      } refreshContent: {
+        ProgressView()
+          .progressViewStyle(.circular)
           .padding()
-        case .triggered, .waitingOnRefresh, .interactionOngoingRefreshComplete:
-          ProgressView()
-            .progressViewStyle(.circular)
-            .padding()
-        }
+
       } content: {
         VStack(alignment: .leading, spacing: 16) {
           ForEach(items, id: \.hashValue) { item in

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct PullToRefreshContentView: View {
+public struct PullToRefreshInteractiveView: View {
   let color: Color
   let foregroundColor: Color
   let value: CGFloat // 0.0 to 1.0

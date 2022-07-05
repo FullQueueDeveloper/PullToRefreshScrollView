@@ -17,7 +17,7 @@
 		D3E1471B287366C9007E57EA /* PullToRefreshScrollViewUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1471A287366C9007E57EA /* PullToRefreshScrollViewUITestsLaunchTests.swift */; };
 		D3E1472928736707007E57EA /* PullToRefreshScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472828736707007E57EA /* PullToRefreshScrollView.swift */; };
 		D3E1472D287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */; };
-		D3E147312873768C007E57EA /* PullToRefreshContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E147302873768C007E57EA /* PullToRefreshContentView.swift */; };
+		D3E147312873768C007E57EA /* PullToRefreshInteractiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E147302873768C007E57EA /* PullToRefreshInteractiveView.swift */; };
 		D3E1473528738F5E007E57EA /* PullToRefreshControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1473428738F5E007E57EA /* PullToRefreshControlState.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +52,7 @@
 		D3E1471A287366C9007E57EA /* PullToRefreshScrollViewUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshScrollViewUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D3E1472828736707007E57EA /* PullToRefreshScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshScrollView.swift; sourceTree = "<group>"; };
 		D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshDistancePreferenceKey.swift; sourceTree = "<group>"; };
-		D3E147302873768C007E57EA /* PullToRefreshContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshContentView.swift; sourceTree = "<group>"; };
+		D3E147302873768C007E57EA /* PullToRefreshInteractiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshInteractiveView.swift; sourceTree = "<group>"; };
 		D3E1473428738F5E007E57EA /* PullToRefreshControlState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshControlState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -143,7 +143,7 @@
 			children = (
 				D3E1472828736707007E57EA /* PullToRefreshScrollView.swift */,
 				D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */,
-				D3E147302873768C007E57EA /* PullToRefreshContentView.swift */,
+				D3E147302873768C007E57EA /* PullToRefreshInteractiveView.swift */,
 				D3E1473428738F5E007E57EA /* PullToRefreshControlState.swift */,
 				D357431B2873B6C8001B7BB9 /* PullToRefreshController.swift */,
 			);
@@ -283,7 +283,7 @@
 				D3E1473528738F5E007E57EA /* PullToRefreshControlState.swift in Sources */,
 				D357431C2873B6C8001B7BB9 /* PullToRefreshController.swift in Sources */,
 				D3E1472D287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift in Sources */,
-				D3E147312873768C007E57EA /* PullToRefreshContentView.swift in Sources */,
+				D3E147312873768C007E57EA /* PullToRefreshInteractiveView.swift in Sources */,
 				D3E14700287366C8007E57EA /* ContentView.swift in Sources */,
 				D3E1472928736707007E57EA /* PullToRefreshScrollView.swift in Sources */,
 				D3E146FE287366C8007E57EA /* PullToRefreshScrollViewApp.swift in Sources */,
