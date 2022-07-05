@@ -11,7 +11,10 @@ import SwiftUI
 final class PullToRefreshController: ObservableObject {
   private let threshold: CGFloat
   private let action: () async -> ()
-  private let atRestDistance: CGFloat = 1
+//  private let atRestDistance: CGFloat = 1
+
+  var spinnerHeight: CGFloat = 0
+  
   @Published var offset: CGFloat = 0 {
     didSet {
       update()
@@ -54,7 +57,7 @@ final class PullToRefreshController: ObservableObject {
   }
 
   var isInteractionActive: Bool {
-    offset > atRestDistance
+    offset > spinnerHeight
   }
 
   func triggerRefresh() {

@@ -12,6 +12,7 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
   let threshold: CGFloat
   let refreshContent: (PullToRefreshControlState) -> RefreshContent
   let content: () -> Content
+  @State var refreshContentHeight: CGFloat = 0
 
   @StateObject private var controller: PullToRefreshController
 
@@ -26,43 +27,53 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
     self._controller = StateObject(wrappedValue: PullToRefreshController(threshold: threshold, action: action))
   }
 
-
   @State var contentPadding: CGFloat = 0
 
   public var body: some View {
 
-    ZStack(alignment: .top) {
+    GeometryReader { geo in
+      ScrollView {
 
-      refreshContent(controller.refreshControlState)
-
-      GeometryReader { geo in
-        ScrollView {
+        MyLayout(controller: controller)({
+          refreshContent(controller.refreshControlState)
           content()
             .anchorPreference(key: PullToRefreshDistancePreferenceKey.self, value: .top) {
               geo[$0].y
             }
-            .padding(.top, contentPadding)
-        }
+        })
       }
     }
+    .onPreferenceChange(RefreshContentHeightPreferenceKey.self, perform: { height in
+      print(height)
+    })
     .onPreferenceChange(PullToRefreshDistancePreferenceKey.self) { offset in
       controller.offset = offset
     }
-    .onChange(of: controller.refreshControlState) { newValue in
-      withAnimation(.easeInOut) {
-        self.contentPadding = contentPadding(refreshControlState: newValue)
-      }
-    }
+  }
+}
+
+
+struct MyLayout: Layout {
+
+  let controller: PullToRefreshController
+
+  func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+    proposal.replacingUnspecifiedDimensions(by: .init(width: 50, height: 50))
   }
 
-  func contentPadding(refreshControlState: PullToRefreshControlState) -> CGFloat {
-    switch refreshControlState {
-    case .possible, .atRest, .interactionOngoingRefreshComplete:
-      return 0
-    case .triggered:
-      return threshold * 0.5
-    case .waitingOnRefresh:
-      return threshold * 0.5
+  func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+
+    if subviews.count == 2 {
+      let spinner = subviews.first!
+      let spinnerSize = spinner.sizeThatFits(proposal)
+      spinner.place(at: .zero, proposal: proposal)
+
+      subviews.last!.place(at: CGPoint(x: 0, y: spinnerSize.height),
+                           proposal: ProposedViewSize(width: proposal.width ?? 0, height: (proposal.height ?? 0) - spinnerSize.height))
+      controller.spinnerHeight = spinnerSize.height
+    } else {
+      controller.spinnerHeight = 0
+      subviews.first!.place(at: .zero, proposal: proposal)
     }
   }
 }

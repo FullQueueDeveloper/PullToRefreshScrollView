@@ -50,7 +50,7 @@ struct ContentView: View {
   }
 
   func refresh() async {
-    try! await Task.sleep(nanoseconds: 1000000000)//3000000000)
+    try! await Task.sleep(nanoseconds: 3000000000)
     await MainActor.run {
       items = [
         UUID(),
