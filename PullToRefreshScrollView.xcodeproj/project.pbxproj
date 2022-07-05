@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D357431C2873B6C8001B7BB9 /* PullToRefreshController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D357431B2873B6C8001B7BB9 /* PullToRefreshController.swift */; };
 		D3E146FE287366C8007E57EA /* PullToRefreshScrollViewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E146FD287366C8007E57EA /* PullToRefreshScrollViewApp.swift */; };
 		D3E14700287366C8007E57EA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E146FF287366C8007E57EA /* ContentView.swift */; };
 		D3E14702287366C9007E57EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3E14701287366C9007E57EA /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D357431B2873B6C8001B7BB9 /* PullToRefreshController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshController.swift; sourceTree = "<group>"; };
 		D3E146FA287366C8007E57EA /* PullToRefreshScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PullToRefreshScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3E146FD287366C8007E57EA /* PullToRefreshScrollViewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshScrollViewApp.swift; sourceTree = "<group>"; };
 		D3E146FF287366C8007E57EA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				D3E1472C287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift */,
 				D3E147302873768C007E57EA /* PullToRefreshContentView.swift */,
 				D3E1473428738F5E007E57EA /* PullToRefreshControlState.swift */,
+				D357431B2873B6C8001B7BB9 /* PullToRefreshController.swift */,
 			);
 			path = PullToRefreshScrollView;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3E1473528738F5E007E57EA /* PullToRefreshControlState.swift in Sources */,
+				D357431C2873B6C8001B7BB9 /* PullToRefreshController.swift in Sources */,
 				D3E1472D287367A5007E57EA /* PullToRefreshDistancePreferenceKey.swift in Sources */,
 				D3E147312873768C007E57EA /* PullToRefreshContentView.swift in Sources */,
 				D3E14700287366C8007E57EA /* ContentView.swift in Sources */,

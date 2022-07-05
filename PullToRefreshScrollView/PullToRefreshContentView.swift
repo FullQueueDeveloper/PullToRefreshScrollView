@@ -7,19 +7,22 @@
 
 import SwiftUI
 
-struct PullToRefreshContentView: View {
+public struct PullToRefreshContentView: View {
   let color: Color
   let foregroundColor: Color
-
   let value: CGFloat // 0.0 to 1.0
 
-  var body: some View {
+  public init(color: Color, foregroundColor: Color, value: CGFloat) {
+    self.color = color
+    self.foregroundColor = foregroundColor
+    self.value = value
+  }
+
+  public var body: some View {
     ZStack {
 
       Ellipse()
-
         .foregroundColor(adjustedTintColor)
-        
         .frame(maxWidth: .infinity, maxHeight: .infinity)
 
       Image(systemName: "arrow.clockwise")

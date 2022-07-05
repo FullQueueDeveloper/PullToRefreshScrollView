@@ -8,33 +8,33 @@
 import SwiftUI
 
 public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View {
-  private let atRestDistance: CGFloat = 1
+
   let threshold: CGFloat
-  let action: () async -> Void
   let refreshContent: (PullToRefreshControlState) -> RefreshContent
   let content: () -> Content
 
-  @State
-  var refreshControlState: PullToRefreshControlState = .atRest
+  @StateObject
+  var controller: PullToRefreshController
 
   public init(threshold: CGFloat = 120,
               action: @escaping () async -> Void,
               @ViewBuilder refreshContent: @escaping (PullToRefreshControlState) -> RefreshContent,
               @ViewBuilder content: @escaping () -> Content) {
     self.threshold = threshold
-    self.action = action
     self.refreshContent = refreshContent
     self.content = content
+
+    self._controller = StateObject(wrappedValue: PullToRefreshController(threshold: threshold, action: action))
   }
 
-  @State var offset: CGFloat = 0
+
   @State var contentPadding: CGFloat = 0
 
   public var body: some View {
 
     ZStack(alignment: .top) {
 
-      refreshContent(refreshControlState)
+      refreshContent(controller.refreshControlState)
 
       GeometryReader { geo in
         ScrollView {
@@ -47,69 +47,19 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
       }
     }
     .onPreferenceChange(PullToRefreshDistancePreferenceKey.self) { offset in
-      self.offset = offset
+      controller.offset = offset
     }
-    .onChange(of: offset, perform: { _ in update() })
-    .onChange(of: refreshControlState) { newValue in
+    .onChange(of: controller.offset, perform: { _ in controller.update() })
+    .onChange(of: controller.refreshControlState) { newValue in
       withAnimation(.easeInOut) {
         self.contentPadding = contentPadding(refreshControlState: newValue)
       }
     }
   }
 
-  func update() {
-    if isInteractionActive {
-      switch refreshControlState {
-      case .atRest:
-        self.refreshControlState = .possible(min(threshold, offset)/threshold)
-      case .possible:
-        if offset < threshold {
-          self.refreshControlState = .possible(min(threshold, offset)/threshold)
-        } else {
-          triggerRefresh()
-          self.refreshControlState = .triggered
-        }
-      case .waitingOnRefresh, .triggered, .interactionOngoingRefreshComplete:
-        return
-      }
-    } else {
-      switch refreshControlState {
-      case .triggered:
-        self.refreshControlState = .waitingOnRefresh
-      case .possible:
-        self.refreshControlState = .atRest
-      case .interactionOngoingRefreshComplete:
-        self.refreshControlState = .atRest
-      case .atRest, .waitingOnRefresh:
-        break
-      }
-    }
-  }
+  
 
-  func triggerRefresh() {
-    Task {
-      await action()
-
-      await MainActor.run {
-        switch refreshControlState {
-        case .atRest:
-          break
-        case .possible:
-          break
-        case .triggered:
-          if isInteractionActive {
-            self.refreshControlState = .interactionOngoingRefreshComplete
-          } else {
-            self.refreshControlState = .atRest
-          }
-        case .waitingOnRefresh:
-          self.refreshControlState = .atRest
-        case .interactionOngoingRefreshComplete:
-         break
-        }
-      }
-    }
-  }
+  
 
   func contentPadding(refreshControlState: PullToRefreshControlState) -> CGFloat {
     switch refreshControlState {
@@ -122,7 +72,5 @@ public struct PullToRefreshScrollView<RefreshContent: View, Content: View>: View
     }
   }
 
-  var isInteractionActive: Bool {
-    offset > atRestDistance
-  }
+
 }
