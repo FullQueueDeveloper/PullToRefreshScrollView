@@ -12,7 +12,7 @@ struct PullToRefreshScrollViewApp: App {
   var body: some Scene {
     WindowGroup {
 //      NavigationView {
-        ContentView()
+      GistContentView()
           .navigationTitle("Pull to refresh")
           .toolbar {
             Button {

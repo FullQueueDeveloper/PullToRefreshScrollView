@@ -103,7 +103,7 @@ final class PullToRefreshController: ObservableObject {
     case .interactionOngoingRefreshComplete:
       return false
     case .triggered:
-      return false
+      return true
     case .waitingOnRefresh:
       return true
     }
@@ -116,7 +116,7 @@ final class PullToRefreshController: ObservableObject {
     case .interactionOngoingRefreshComplete:
       return true
     case .triggered:
-      return true
+      return false
     case .waitingOnRefresh:
       return false
     }

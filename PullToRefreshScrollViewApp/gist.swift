@@ -1,10 +1,3 @@
-//
-//  other.swift
-//  PullToRefreshScrollView
-//
-//  Created by Full Queue Developer on 7/4/22.
-//
-
 import Foundation
 //
 //  ContentView.swift
@@ -17,32 +10,38 @@ import SwiftUI
 
 struct GistContentView: View {
   @State var actionState: RefreshableScrollViewActionState = .idle
+  @State var data: [UUID] = [UUID()]
 
   var body: some View {
     RefreshableScrollView(threshold: 50, actionState: $actionState) {
-      Task(priority: TaskPriority.userInitiated) {
+
         print("start")
-        try await Task.sleep(nanoseconds: 5_000_000_000) //do something for 3 seconds
+        try! await Task.sleep(nanoseconds: 3_000_000_000) //do something for 3 seconds
         print("done")
+      await MainActor.run {
+        self.data = [UUID(), UUID(), UUID(), UUID(), UUID()]
         withAnimation {
           actionState = .idle
         }
       }
+
+
+
     } refreshContent: {
       Group {
         switch actionState {
         case .idle:
           ProgressView(value: 0)
         case .changing(let fraction):
-          ProgressView(value: fraction)
+          PullToRefreshInteractiveView(color: .purple, foregroundColor: .orange, value: CGFloat(fraction))
+            .frame(width: 40, height: 40)
         case .pending:
-          ProgressView()
-            .progressViewStyle(.circular)
+          DefaultRefreshView(color: .green, foregroundColor: .yellow)
         }
       }
       .padding()
     } content: {
-      ForEach((0...1000).map{String($0)}, id: \.self) { item in
+      ForEach(data.map{ $0.uuidString }, id: \.self) { item in
         Text(item)
       }
     }
@@ -61,12 +60,12 @@ struct RefreshableScrollView<Content: View, RefreshContent: View>: View {
   let threshold: CGFloat
   let content: () -> Content
   let refreshContent: () -> RefreshContent
-  let action: () -> Void
+  let action: () async -> Void
 
   init(
     threshold: CGFloat = 40,
     actionState: Binding<RefreshableScrollViewActionState>,
-    action: @escaping () -> Void,
+    action: @escaping () async -> Void,
     @ViewBuilder refreshContent: @escaping () -> RefreshContent,
     @ViewBuilder content: @escaping () -> Content
   ) {
@@ -124,7 +123,10 @@ struct RefreshableScrollView<Content: View, RefreshContent: View>: View {
           if offset > threshold {
             withAnimation {
               actionState = .pending
-              action()
+              Task(priority: .userInitiated) {
+                await action()
+              }
+
             }
           }
           else if offset <= 0 {
